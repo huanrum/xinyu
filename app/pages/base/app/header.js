@@ -7,8 +7,7 @@ import { brandName } from '@config'
 import { logout } from '@apis/common'
 // import User from '@images/user.png'
 
-import EditPassword from './modal/editPassword'
-import UserInfo from './modal/userInfo'
+import UserInfo from './userInfo'
 
 
 const { confirm } = Modal
@@ -24,7 +23,6 @@ export default class Header extends Component {
     this.state = {
       loading: false,
       userInfo: false, // 控制用户信息弹框显隐
-      editPasswordMadalIsOpen: false,
     }
     this.handleLogout = this.handleLogout.bind(this)
   }
@@ -54,21 +52,6 @@ export default class Header extends Component {
         })
       },
     })
-  }
-
-  // 取消修改密码弹窗
-  cancel = () => {
-    this.setState({ editPasswordMadalIsOpen: false })
-  }
-
-  // 确认修改密码弹窗
-  handleOk = () => {
-    this.setState({ editPasswordMadalIsOpen: false })
-  }
-
-  // 修改密码弹窗显示
-  editPasswordOpen = () => {
-    this.setState({ editPasswordMadalIsOpen: true })
   }
 
   // 点击显示用户信息
@@ -106,34 +89,6 @@ export default class Header extends Component {
     if (sessionStorage.getItem('userinfo')) {
       name = JSON.parse(sessionStorage.getItem('userinfo')).chineseName
     }
-    // console.log(JSON.parse(sessionStorage.getItem('userinfo')))
-    const userCenter = (
-      <Menu className="nav-dropmenu">
-        <Menu.Item key="1">
-          <Icon type="caret-up" />
-          <span className="label">角色： </span><span className="value" title={roles.join(',')}>{roles.join(',') || '---'}</span>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="2">
-          <span className="label">警号： </span><span className="value">{userinfo.policeCode || '---'}</span>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="3">
-          <span className="label">职务： </span><span className="value">{userinfo.duty || '---'}</span>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="4">
-          <Row>
-            <Col span={12}>
-              <Button type="primary" size="small" onClick={this.editPasswordOpen}>修改密码</Button>
-            </Col>
-            <Col span={12}>
-              <Button type="primary" size="small" onClick={this.handleLogout}>退出登录</Button>
-            </Col>
-          </Row>
-        </Menu.Item>
-      </Menu>
-    )
     const { gMenuList, topMenuReskey } = this.props
     const topKey = topMenuReskey
     return (
@@ -170,16 +125,6 @@ export default class Header extends Component {
             </Col>
           </Row>
         </div>
-        {
-          this.state.editPasswordMadalIsOpen ?
-            <EditPassword
-              handleOk={this.handleOk}
-              visible={this.state.editPasswordMadalIsOpen}
-              onCancel={this.cancel}
-            />
-            : null
-        }
-
         {
           this.state.userInfo ?
             <UserInfo

@@ -14,11 +14,6 @@
     "mock": "supervisor -w mock ./mocks/http.js",
     "dll": "webpack --config ./scripts/webpack.dll.config.js"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "author": "duxianwei",
   "devDependencies": {
     "antd": "^3.18.2",

@@ -119,60 +119,45 @@ export default class userInfo extends Component {
       <Drawer
         visible
         className="drawer-sm"
-        title="用户信息"
+        title="修改密码"
         onCancel={this.props.onCancel}
-        footer={this.footer()}
       >
         <div className="user">
           <div className="user-img"><img src="" alt="" /></div>
           <div className="user-info">
-            <ul>
-              <li><span>姓名</span><b>{userinfo.chineseName}</b></li>
-              <li><span>手机号</span><b>{userinfo.phoneNo}</b></li>
-              <li><span>短号</span><b>{userinfo.shortPhoneNo}</b></li>
-              <li><span>单位</span><b>{userinfo.deptName}</b></li>
-              <li><span>职务</span><b>{userinfo.post}</b></li>
-              <li><span>用户角色</span><b>{roles}</b></li>
-              <li className="changePsw_in"><span>修改密码</span><i className="enter" onClick={() => this.setState({ pswFlag: true })}>修改</i></li>
-              {this.state.pswFlag ?
-                <div className="changePswWrap">
-                  <div className="changePsw">
-                    <div className="changePsw_title">修改密码</div>
-                    <Form layout="horizontal" onSubmit={this.handleSubmit}>
-                      <FormItem {...formItemLayout} label="原密码" hasFeedback>
-                        {getFieldDecorator('oldPass', {
-                          initialValue: '',
-                          rules: [{ required: true, message: '请输入原密码' },
-                            { pattern: regExpConfig.pwd, message: '密码由6-16位数字或者字母组成' },
-                          ],
-                        })(<Input placeholder="请输入原密码" type="password" />)}
-                      </FormItem>
-                      <FormItem {...formItemLayout} label="新密码" hasFeedback>
-                        {getFieldDecorator('password', {
-                          initialValue: '',
-                          rules: [{ required: true, message: '请输入新密码' },
-                            { pattern: regExpConfig.pwd, message: '密码由6-16位数字或者字母组成' },
-                            { validator: this.checkRepeatPassword },
-                          ],
-                        })(<Input placeholder="请输入新密码" type="password" />)}
-                      </FormItem>
-                      <FormItem {...formItemLayout} label="确认新密码" hasFeedback>
-                        {getFieldDecorator('checkPass', {
-                          initialValue: '',
-                          rules: [{ required: true, message: '确认新密码' },
-                            { validator: this.checkNewPassword },
-                          ],
-                        })(<Input placeholder="确认新密码" type="password" />)}
-                      </FormItem>
-                      <div className="changePsw_btngroup">
-                        <Button type="primary" htmlType="submit" loading={this.state.submitLoading}>确定</Button>
-                        <Button type="defalut" htmlType="reset" onClick={() => this.setState({ pswFlag: false })}>取消</Button>
-                      </div>
-                    </Form>
-                  </div>
-                </div>
-                : ''}
-            </ul>
+            <b>{userinfo.chineseName}</b>
+          </div>
+          <div className="changePswWrap">
+            <Form layout="horizontal" onSubmit={this.handleSubmit}>
+              <FormItem {...formItemLayout} label="原密码" hasFeedback>
+                {getFieldDecorator('oldPass', {
+                  initialValue: '',
+                  rules: [{ required: true, message: '请输入原密码' },
+                    { pattern: regExpConfig.pwd, message: '密码由6-16位数字或者字母组成' },
+                  ],
+                })(<Input placeholder="请输入原密码" type="password" />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label="新密码" hasFeedback>
+                {getFieldDecorator('password', {
+                  initialValue: '',
+                  rules: [{ required: true, message: '请输入新密码' },
+                    { pattern: regExpConfig.pwd, message: '密码由6-16位数字或者字母组成' },
+                    { validator: this.checkRepeatPassword },
+                  ],
+                })(<Input placeholder="请输入新密码" type="password" />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label="确认新密码" hasFeedback>
+                {getFieldDecorator('checkPass', {
+                  initialValue: '',
+                  rules: [{ required: true, message: '确认新密码' },
+                    { validator: this.checkNewPassword },
+                  ],
+                })(<Input placeholder="确认新密码" type="password" />)}
+              </FormItem>
+              <div className="changePsw_btngroup">
+                <Button type="primary" htmlType="submit" loading={this.state.submitLoading}>确定</Button>
+              </div>
+            </Form>         
           </div>
         </div>
       </Drawer>

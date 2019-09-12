@@ -3,25 +3,18 @@ import { Router, Route, IndexRoute, hashHistory/* , Redirect */ } from 'react-ro
 import { isLogin } from '@configs/common'
 import { set } from '@config'
 
-import * as base from '@pages/base' // 基础
-import * as sysSet from '@pages/set' // 设置中心-系统设置
-import * as menu from '@pages/menu' // 菜单
+import * as pages from '@pages'
+import * as modules from '@pages/app/modules'
 
 export default () => (
   <Router history={hashHistory}>
-    <Route path="/" component={base.app} onEnter={isLogin}>
-      <IndexRoute component={base.echarts} />
+    <Route path="/" component={pages.app} onEnter={isLogin}>
+      <IndexRoute component={modules.home} />
       {/** *菜单 开始 */}
-      <Route path="/echarts" component={menu.echarts} />
-      <Route path="/editor" component={menu.editor} />
+      <Route path="/home" component={modules.home} />
       {/** *菜单 结束 */}
-      {/** *系统设置 开始 */}
-      <Route path={`/${set}/userManage`} component={sysSet.userManage} />
-      <Route path={`/${set}/roleManage`} component={sysSet.roleManage} />
-      <Route path={`/${set}/moduleManage`} component={sysSet.moduleManage} />
-      {/** *系统设置 结束 */}
     </Route>
-    <Route path="/login" component={base.login} />
-    <Route path="*" component={base.notfound} />
+    <Route path="/login" component={pages.login} />
+    <Route path="*" component={pages.notfound} />
   </Router>
 )

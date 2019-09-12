@@ -64,10 +64,6 @@ export default class Login extends Component {
           menu({}, (response) => {
             const nav = response.data.list || []
             if (nav && nav[0]) {
-              sessionStorage.setItem('gMenuList', JSON.stringify(nav))
-              sessionStorage.setItem('topMenuReskey', nav[0].resKey)
-              sessionStorage.setItem('leftNav', JSON.stringify(nav))
-
               staff({ usercode: query.username }, (resp) => {
                 sessionStorage.setItem('userinfo', JSON.stringify(resp.data))
                 hashHistory.push('/')

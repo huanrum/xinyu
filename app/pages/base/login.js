@@ -1,13 +1,14 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { hashHistory, Link } from 'react-router'
+import { hashHistory/* , Link */ } from 'react-router'
 import { Spin, Form, Icon, Input, Button, Row, Col, message } from 'antd'
 import { regExpConfig } from '@reg'
 import { brandName } from '@config'
 import { clearGformCache2, login } from '@actions/common'
 import { /* login,  */staff, menu } from '@apis/common'
 import Logo from '@components/logo/logo'
+import md5 from 'md5'
 import QueuiAnim from 'rc-queue-anim'
 
 // import '@styles/base.less'
@@ -34,11 +35,12 @@ export default class Login extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(clearGformCache2({}))
+    this.props.form.setFieldsValue({ username: 'username', password: '123456' })
   }
 
-  // region 收缩业务代码功能
+  // #region 收缩业务代码功能
 
   handleSubmit(e, isCertificates) {
     e.preventDefault()
@@ -50,6 +52,12 @@ export default class Login extends Component {
       if (!err) {
         const query = this.props.form.getFieldsValue()
         this.setState({ loading: true })
+        /* if (process.env.NODE_ENV === 'production') {
+          values.password = values.password
+        } else {
+          values.password = md5(values.password)
+        } */
+        values.password = md5(values.password)
         this.props.dispatch(login(values, (res) => {
           sessionStorage.setItem('token', res.data.token)
           sessionStorage.setItem('ticket', res.data.ticket)
@@ -61,6 +69,7 @@ export default class Login extends Component {
               sessionStorage.setItem('leftNav', JSON.stringify(nav))
 
               staff({ usercode: query.username }, (resp) => {
+                sessionStorage.setItem('userinfo', JSON.stringify(resp.data))
                 hashHistory.push('/')
               }, (r) => {
                 message.warning(r.msg)
@@ -85,17 +94,14 @@ export default class Login extends Component {
     })
   }
 
-  // endregion
+  // #endregion
 
   render() {
     const { getFieldDecorator } = this.props.form
     console.log(this.props.loginResponse)
     return (
       <div className="login-container">
-        <div className="extraLink">
-          <a href="http://56.32.3.185:7777/pgis/html/prologue/prologue.html" target="_blank" rel="noopener noreferrer">数据承载</a>
-          <a href="http://56.32.3.123:8080/search/sspt/datasearch/prologue.html" target="_blank" rel="noopener noreferrer">数据纽带</a>
-        </div>
+        <div className="extraLink" />
         <div className="flexcolumn">
           <div className="login-header" key="header">
             <div className="slogan">

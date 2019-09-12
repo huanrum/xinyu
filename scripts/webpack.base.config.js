@@ -2,7 +2,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const HappyPack = require('happypack')
 const os = require('os')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
@@ -19,6 +19,7 @@ const webpackConfigBase = {
     path: resolve('../dist'),
     filename: '[name].[hash:4].js',
     chunkFilename: 'chunks/[name].[hash:4].js',
+    // publicPath: './'
   },
   resolve: {
     extensions: ['.js', '.json'],
@@ -84,6 +85,8 @@ const webpackConfigBase = {
     ],
   },
   plugins: [
+    // 去除moment的语言包
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/),
     new HappyPack({
       //用id来标识 happypack处理那里类文件
       id: 'happyBabel',
@@ -108,7 +111,7 @@ const webpackConfigBase = {
     }),
     // 提取css
     new ExtractTextPlugin('style.[hash:4].css'),
-    new webpack.optimize.CommonsChunkPlugin({
+    /* new webpack.optimize.CommonsChunkPlugin({
       name: 'common', // 入口文件名
       filename: 'common.[hash:4].js', // 打包后的文件名
       minChunks: function (module, count) {
@@ -116,10 +119,20 @@ const webpackConfigBase = {
           /\.js$/.test(module.resource) &&
           module.resource.indexOf(resolve('../node_modules')) === 0
       }
-    }),
+    }), */
     new webpack.optimize.CommonsChunkPlugin({
       async: 'async-common',
       minChunks: 3,
+    }),
+    // 关联dll拆分出去的依赖
+    new webpack.DllReferencePlugin({
+      manifest: require('../app/resource/dll/vendor.manifest.json'), 
+      context: __dirname, 
+    }),
+    // 关联dll拆分出去的依赖
+    new webpack.DllReferencePlugin({
+      manifest: require('../app/resource/dll/redux.manifest.json'), 
+      context: __dirname, 
     }),
   ]
 }

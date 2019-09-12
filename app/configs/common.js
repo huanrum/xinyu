@@ -10,6 +10,7 @@ export function parseQueryString(url) {
     const strs = str.split('&')
     strs.map((item, i) => {
       const arr = strs[i].split('=')
+      /* eslint-disable */
       obj[arr[0]] = arr[1]
     })
   }

@@ -10,9 +10,7 @@ import * as menu from '@pages/menu' // 菜单
 export default () => (
   <Router history={hashHistory}>
     <Route path="/" component={base.app} onEnter={isLogin}>
-      <IndexRoute component={base.example} />
-      <Route path="/desk$/index" component={base.example} />
-      <Route path="/socketReceive" component={base.socketReceive} />
+      <IndexRoute component={base.echarts} />
       {/** *菜单 开始 */}
       <Route path="/echarts" component={menu.echarts} />
       <Route path="/editor" component={menu.editor} />

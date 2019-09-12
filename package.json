@@ -8,16 +8,10 @@
   },
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run dev\" \"npm run mock\"",
     "dev": "webpack-dev-server --config ./scripts/webpack.dev.config.js",
     "testing": "webpack --config ./scripts/webpack.testing.config.js",
     "build": "webpack --config ./scripts/webpack.prod.config.js",
-    "lint": "eslint ./ --cache --fix --ignore-pattern .gitignore",
-    "test": "jest --coverage",
-    "mock": "supervisor -w mock ./app/mocks/http.js",
-    "precommit": "lint-staged",
-    "preCommitInit": "node ./node_modules/husky/lib/installer/bin.js install",
-    "test:report": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "mock": "supervisor -w mock ./mocks/http.js",
     "dll": "webpack --config ./scripts/webpack.dll.config.js"
   },
   "husky": {
@@ -26,69 +20,6 @@
     }
   },
   "author": "duxianwei",
-  "contributors": [
-    {
-      "name": "HanQ"
-    },
-    {
-      "name": "Huxiaoyu"
-    },
-    {
-      "name": "jinxedjkldsa"
-    }
-  ],
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "testEnvironment": "jsdom",
-    "moduleNameMapper": {
-      "\\.(css|less)$": "identity-obj-proxy",
-      "^@apis(.*)$": "<rootDir>/app/apis$1",
-      "^@configs(.*)$": "<rootDir>/app/configs$1",
-      "^@ajax(.*)$": "<rootDir>/app/configs/ajax.js",
-      "^@config(.*)$": "<rootDir>/app/configs/config.js",
-      "^@reg(.*)$": "<rootDir>/app/configs/regular.config.js",
-      "^@components(.*)$": "<rootDir>/app/components$1",
-      "^@tableList(.*)$": "<rootDir>/app/components/tableList/tableList.js",
-      "^@actions(.*)$": "<rootDir>/app/redux/actions$1",
-      "^@images(.*)$": "<rootDir>/app/images$1"
-    },
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/coverage/**",
-      "!**/scripts/**",
-      "!**/reducers/**",
-      "!**/actions/**",
-      "!**/base/**",
-      "!**/apis/**",
-      "!**/mocks/**",
-      "!**/middleware/**",
-      "!**/components/**",
-      "!**/menu/**",
-      "!**/configs/**",
-      "!**/store.js",
-      "!**/provider.jsx",
-      "!**/example.js",
-      "!**/client.js",
-      "!**/webpack.config.js",
-      "!**/selectRole.js",
-      "!**/setCenter/index.js",
-      "!**/dist/**"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 50,
-        "functions": 50,
-        "lines": 50,
-        "statements": 50
-      }
-    }
-  },
   "devDependencies": {
     "antd": "^3.18.2",
     "babel-core": "~6.26.0",
@@ -132,7 +63,6 @@
     "react-addons-test-utils": "~15.6.2",
     "react-hot-loader": "^3.0.0-beta.7",
     "sinon": "~4.1.6",
-    "socket.io": "2.0.4",
     "style-loader": "~0.19.1",
     "supervisor": "^0.12.0",
     "url-loader": "~0.6.2",
@@ -172,7 +102,6 @@
     "redux-mock-store": "^1.5.3",
     "redux-thunk": "~2.2.0",
     "require": "^2.4.20",
-    "socket.io-client": "^2.2.0",
     "webpack": "~3.10.0"
   }
 }

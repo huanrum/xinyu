@@ -10,12 +10,6 @@ module.exports = {
         resIcon: 'pgmb',
       },
       {
-        id: 10064,
-        resName: 'socket接收',
-        resKey: 'socketReceive',
-        resIcon: 'pgmb',
-      },
-      {
         id: 600110233,
         resName: '图表',
         resKey: 'echarts',

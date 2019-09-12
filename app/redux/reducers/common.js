@@ -48,13 +48,3 @@ export const allRetrievalResult = handleActions({
     return { ...res.data, loading: false }
   },
 }, allRetrievalState)
-
-
-// socket相关操作
-export const socketCollection = handleActions({
-  'socketReceive'(state, action) {
-    // eslint-disable-next-line no-unused-vars
-    const data = action.payload
-    return { data }
-  },
-}, {})
